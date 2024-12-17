@@ -29,20 +29,29 @@ struct AddNewModalView: View {
             Form {
                 Section("Name"){
                     TextField("Add name", text: $name)
+                        .accessibilityLabel("Medicine name")
+                        .accessibilityHint("Enter the name of the medicine you want to be reminded of")
                 }
                 Section("At what time do you have to take it?"){
                     DatePicker("Select time", selection: $selectTime, displayedComponents: [.hourAndMinute])
                         .datePickerStyle(.wheel)
+                        .accessibilityLabel("Scroll Clock to select time")
+                        
                 }
                 Section("Start Date"){
                     DatePicker("Select start date", selection: $selectedStartDate, displayedComponents: [.date])
+                        .accessibilityHint("Choose the starting date for your medicine reminder")
                     
                 }
                 Section("End Date"){
                     DatePicker("Select end date", selection: $selectedEndDate, displayedComponents: [.date])
+                        .accessibilityHint("Choose the ending date for your medicine reminder")
                 }
                 Section("Total days"){
                     Text("\(totalDays) days")
+                        .accessibilityLabel("Total days")
+                        .accessibilityHint("Displays the total number of days between the start and end dates.")
+
                 }
             }
             .navigationTitle("New Reminder")
@@ -51,6 +60,8 @@ struct AddNewModalView: View {
                     Button("Cancel") {
                         showModal = false
                     }
+                    .accessibilityLabel("Cancel")
+                                       .accessibilityHint("Dismiss the new reminder creation view.")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     
@@ -60,6 +71,8 @@ struct AddNewModalView: View {
                     } label: {
                         Text("Add")
                     }
+                    .accessibilityLabel("Add medicine")
+                                        .accessibilityHint("Save this new medicine reminder.")
                 }
                 }
             }

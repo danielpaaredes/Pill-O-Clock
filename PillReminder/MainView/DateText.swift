@@ -28,21 +28,28 @@ struct DateText: View {
         
         VStack {
             Image(systemName: "pill")
+                .accessibilityHidden(true)
             
             Text("\(medicinesVM.medicines.filter { $0.isTaken }.count)/\(medicinesVM.medicines.count)")
                 .font(.title)
                 .bold()
                 .multilineTextAlignment(.center)
+                .accessibilityLabel("Medicine Progress")
+                .accessibilityValue("\(medicinesVM.medicines.filter { $0.isTaken }.count) of \(medicinesVM.medicines.count) medicines taken")
             
             Text(dayFormatter.string(from: currentDate))
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
+                .accessibilityLabel("Day of the week")
+                                .accessibilityValue(dayFormatter.string(from: currentDate))
             
             Text(dateFormatter.string(from: currentDate))
                 .font(.headline)
                 .bold()
                 .multilineTextAlignment(.center)
+                .accessibilityLabel("Current date")
+                                .accessibilityValue(dateFormatter.string(from: currentDate))
         }
             .onAppear() {
                 Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true){

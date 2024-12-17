@@ -58,12 +58,15 @@ struct ProgressBar: View {
                 .stroke(lineWidth: 15.0)
                 .opacity(0.20)
                 .foregroundColor(Color.gray)
+                .accessibilityHidden(true)
             Circle()
                 .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
                 .stroke(style: StrokeStyle(lineWidth: 12.0, lineCap: .round, lineJoin: .round))
                 .foregroundStyle(color)
                 .rotationEffect(Angle(degrees: 270))
                 .animation(.easeInOut(duration: 2.0), value: progress)
+                .accessibilityLabel("Progress bar")
+                                .accessibilityValue(String(format: "%.0f%% completed", progress * 100))
         }
     }
 }

@@ -32,7 +32,7 @@ struct MedicineListView: View {
     
     var medicineList: some View {
         ForEach($medicinesVM.medicines) { $medicine in
-            NavigationLink(destination: MedicineDetailView(currentMedicine: medicine)){
+            NavigationLink(destination: MedicineDetailView(currentMedicine: $medicine)){
                 MedicineView(medicine: $medicine)
                     .padding()
                     .overlay {

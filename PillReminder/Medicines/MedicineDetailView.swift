@@ -17,14 +17,18 @@ extension DateFormatter {
 import SwiftUI
 
 struct MedicineDetailView: View {
-    var currentMedicine: Medicine
+    @Binding var currentMedicine: Medicine
     
     var body: some View {
         ScrollView {
             VStack(spacing: 5) {
+                ToggleOnlyCard(text: "is Taken?", isOn: $currentMedicine.isTaken)
+                
                 MedicineDetailCard(title: "Time", value: currentMedicine.time, formatter: DateFormatter.shortTime, iconName: "clock")
                 MedicineDetailCard(title: "Start Date", value: currentMedicine.selectedStartDate, formatter: DateFormatter.shortDate, iconName: "calendar.badge.plus")
                 MedicineDetailCard(title: "Finish Date", value: currentMedicine.selectedEndDate, formatter: DateFormatter.shortDate, iconName: "calendar.badge.minus")
+                
+                
                 
             }
             .navigationTitle(currentMedicine.name)
@@ -67,6 +71,7 @@ struct MedicineDetailCard: View {
                    
                     
                     }
+                .accessibilityHidden(true)
         
                 VStack (alignment: .leading, spacing: 2){
                     Text(title)
@@ -79,6 +84,7 @@ struct MedicineDetailCard: View {
                         .fontWeight(.semibold)
                                             
                 }
+               
                    
             }
             .padding()
@@ -87,7 +93,50 @@ struct MedicineDetailCard: View {
     }
 }
 
-#Preview {
-    MedicineDetailView(currentMedicine: Medicine(name:"ji", time: Date(), selectedEndDate: Date(), selectedStartDate: Date()))
+
+struct ToggleOnlyCard: View {
+    var text: String
+    @Binding var isOn: Bool
+
+    var body: some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white)
+                .frame(maxWidth: .infinity, maxHeight: 60)
+                .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 2)
+
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(Color.white)
+                        .stroke(Color.black, lineWidth: 0.1)
+                        .frame(width: 40, height: 40)
+                       
+                        .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 2)
+
+                    Image(systemName: "checkmark.circle")
+                        .font(.headline)
+                        .foregroundColor(Color.blue)
+                }
+                VStack(alignment: .leading) {
+            
+                        Text(text)
+                            .font(.caption)
+                            .foregroundColor(Color.black.opacity(0.5))
+
+                                                
+                    
+                   
+                }
+                .padding(.leading, 8)
+                Spacer()
+
+                Toggle("", isOn: $isOn)
+                    .labelsHidden()
+                    .tint(.blue)
+            }
+            .padding()
+        }
+    }
 }
 
